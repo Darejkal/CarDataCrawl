@@ -1,0 +1,6 @@
+*.jsonl
+*.log
+*.txt
+/carconnection/data-vin
+/carconnection/data
+venv/

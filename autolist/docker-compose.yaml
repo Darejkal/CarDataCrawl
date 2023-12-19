@@ -1,0 +1,28 @@
+networks:
+    web:
+      driver:  bridge
+services:
+    web1:
+      build: ./web
+      image: firefoxweb
+      networks:
+        web:
+          aliases:
+          - web1
+      privileged: true
+      ports:
+      - 7900:7900
+      shm_size: 2gb
+    producer:
+      build: ./backend
+      image: python-selenium
+      volumes: 
+      -   ./backend/producer.py:/main.py:ro
+      -   ./links2.txt:/links.txt
+      working_dir: /
+      entrypoint: "python -u /main.py"
+      networks:
+      - web
+      depends_on: 
+      - web1
+      restart: always
